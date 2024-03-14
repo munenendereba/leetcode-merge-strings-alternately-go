@@ -126,6 +126,12 @@ func BenchmarkMergeAlternatelyStringBuilder(b *testing.B) {
 	}
 }
 
+func BenchmarkMergeAlternatelyStringBuilder2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		mergeAlternatelyStringBuilder2("abc", "def31")
+	}
+}
+
 func BenchmarkMergeAlternatelyCopy(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		mergeAlternatelyCopy("abc", "def31")

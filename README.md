@@ -40,7 +40,10 @@ word1 and word2 consist of lowercase English letters.
 ## Running
 
 Run using the following command: `go run .`
+
 To run the tests `go test -v .`
+
+To run the benchmark tests `go test -bench="." `
 
 ## Authors
 

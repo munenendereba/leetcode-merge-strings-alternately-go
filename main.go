@@ -91,6 +91,27 @@ func mergeAlternatelyStringBuilder(word1 string, word2 string) string {
 	return builder.String()
 }
 
+func mergeAlternatelyStringBuilder2(word1 string, word2 string) string {
+	len1, len2 := len(word1), len(word2)
+
+	var builder strings.Builder
+	builder.Grow(len1 + len2)
+
+	i, j := 0, 0
+	for i < len1 || j < len2 {
+		if i < len1 {
+			builder.WriteByte(word1[i])
+			i++
+		}
+		if j < len2 {
+			builder.WriteByte(word2[j])
+			j++
+		}
+	}
+
+	return builder.String()
+}
+
 func mergeAlternatelyCopy(word1, word2 string) string {
 	stringlen := len(word1) + len(word2)
 
