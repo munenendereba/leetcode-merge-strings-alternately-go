@@ -91,19 +91,6 @@ func mergeAlternatelyStringBuilder(word1 string, word2 string) string {
 	return builder.String()
 }
 
-// func BenchmarkCopy(t *testing.B) {
-// 	t.ResetTimer()
-// 	byteString := make([]byte, t.N)
-// 	byteLength := 0
-
-// 	t.ResetTimer()
-// 	for n := 0; n < t.N; n++ {
-// 		byteLength += copy(byteString[byteLength:], charac)
-// 	}
-// 	t.StopTimer()
-// 	logIt("BenchmarkCopy", string(byteString), t.N)
-// }
-
 func mergeAlternatelyCopy(word1, word2 string) string {
 	stringlen := len(word1) + len(word2)
 
@@ -123,4 +110,20 @@ func mergeAlternatelyCopy(word1, word2 string) string {
 	copy(byeteMerged[byteLength:], word2)
 
 	return string(byeteMerged)
+}
+
+func mergeAlternatelyRecursive(word1 string, word2 string) string {
+	if len(word1) == 0 {
+		return word2
+	}
+
+	if len(word2) == 0 {
+		return word1
+	}
+
+	if len(word1) == 1 && len(word2) == 1 {
+		return word1 + word2
+	}
+
+	return string(word1[0]) + string(word2[0]) + mergeAlternately(word1[1:], word2[1:])
 }

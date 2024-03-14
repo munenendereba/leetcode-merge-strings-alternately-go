@@ -87,6 +87,21 @@ func TestMergeAlternatelyCopy(t *testing.T) {
 	}
 }
 
+func TestMergeAlternatelyRecursive(t *testing.T) {
+
+	for _, test := range tests {
+		testname := fmt.Sprintf(`testing with words "%s", "%s"`, test.word1, test.word2)
+
+		t.Run(testname, func(t *testing.T) {
+			merged := mergeAlternatelyRecursive(test.word1, test.word2)
+
+			if merged != test.merged {
+				t.Errorf(`testing mergeAlternatelyRecursive("%s","%s"), expected "%s", but got "%s"`, test.word1, test.word2, test.merged, merged)
+			}
+		})
+	}
+}
+
 func BenchmarkMergeAlternately(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		mergeAlternately("abc", "def31")
@@ -114,5 +129,11 @@ func BenchmarkMergeAlternatelyStringBuilder(b *testing.B) {
 func BenchmarkMergeAlternatelyCopy(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		mergeAlternatelyCopy("abc", "def31")
+	}
+}
+
+func BenchmarkMergeAlternatelyRecursive(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		mergeAlternatelyRecursive("abc", "def31")
 	}
 }
