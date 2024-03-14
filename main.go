@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bytes"
+	"strings"
+)
+
 func main() {
 
 }
@@ -29,4 +34,93 @@ func mergeAlternately(word1 string, word2 string) string {
 	}
 
 	return merged
+}
+
+func mergeAlternately2(word1 string, word2 string) string {
+	var ans string
+	for len(word1) > 0 && len(word2) > 0 {
+		ans += string(word1[0]) + string(word2[0])
+		word1 = word1[1:]
+		word2 = word2[1:]
+	}
+	if len(word1) > 0 {
+		ans += word1
+	}
+	if len(word2) > 0 {
+		ans += word2
+	}
+
+	return ans
+}
+
+func mergeAlternatelyBytesBuffer(word1 string, word2 string) string {
+	var b bytes.Buffer
+	i, j := 0, 0
+	for i < len(word1) || j < len(word2) {
+		if i < len(word1) {
+			b.WriteByte(word1[i])
+			i++
+		}
+		if j < len(word2) {
+			b.WriteByte(word2[j])
+			j++
+		}
+	}
+	return b.String()
+}
+
+func mergeAlternatelyStringBuilder(word1 string, word2 string) string {
+	len1, len2 := len(word1), len(word2)
+	maxLength := len1 + len2
+
+	var builder strings.Builder
+	builder.Grow(maxLength)
+
+	i, j := 0, 0
+	for i < len1 || j < len2 {
+		if i < len1 {
+			builder.WriteByte(word1[i])
+			i++
+		}
+		if j < len2 {
+			builder.WriteByte(word2[j])
+			j++
+		}
+	}
+
+	return builder.String()
+}
+
+// func BenchmarkCopy(t *testing.B) {
+// 	t.ResetTimer()
+// 	byteString := make([]byte, t.N)
+// 	byteLength := 0
+
+// 	t.ResetTimer()
+// 	for n := 0; n < t.N; n++ {
+// 		byteLength += copy(byteString[byteLength:], charac)
+// 	}
+// 	t.StopTimer()
+// 	logIt("BenchmarkCopy", string(byteString), t.N)
+// }
+
+func mergeAlternatelyCopy(word1, word2 string) string {
+	stringlen := len(word1) + len(word2)
+
+	byeteMerged := make([]byte, stringlen)
+	byteLength := 0
+
+	for len(word1) > 0 && len(word2) > 0 {
+		byteLength += copy(byeteMerged[byteLength:], string(word1[0]))
+		byteLength += copy(byeteMerged[byteLength:], string(word2[0]))
+
+		word1 = word1[1:]
+		word2 = word2[1:]
+	}
+
+	byteLength += copy(byeteMerged[byteLength:], word1)
+
+	copy(byeteMerged[byteLength:], word2)
+
+	return string(byeteMerged)
 }
